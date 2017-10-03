@@ -8,6 +8,7 @@ func main() {
 	job := createJobFromFlags()
 
 	result, err := job.Analyze()
+	
 	process(result, "Hejsa", "main")
 
 	checkError(err)

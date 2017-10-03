@@ -2,7 +2,6 @@ package main
 
 import (
 	"database/sql"
-	"flag"
 	"fmt"
 	"log"
 	"reflect"
@@ -35,7 +34,7 @@ func initiateconnection(connectionstring string, database string) (*connection, 
 	return &connection{db}, nil
 }
 
-type SqlJob struct {
+type SQLJob struct {
 	query      string
 	connection *connection
 }
@@ -48,7 +47,7 @@ type ResultMap struct {
 
 // Analyze uses data from the SqlJob to call the query and
 // returns an ResultMap
-func (s SqlJob) Analyze() ([]ResultMap, error) {
+func (s SQLJob) Analyze() ([]ResultMap, error) {
 
 	rows, err := s.connection.db.Query(s.query)
 	if err != nil {
@@ -146,25 +145,24 @@ func GetValueAsString(v reflect.Value) string {
 	}
 }
 
-func NewJob(query string, connectionstring string, database string) SqlJob {
-	conn, err := initiateconnection(connectionstring, database)
+func newJob(parameters jobParameters) SQLJob {
+	conn, err := initiateconnection(parameters.connectionstring, parameters.database)
 	if err != nil {
 		log.Panicln("Failed to establish connection", err)
 	}
 
 	log.Print("Initated connection to database")
 
-	return SqlJob{query, conn}
+	return SQLJob{parameters.query, conn}
 }
 
-func createJobFromFlags() SqlJob {
-	var connectionstring, database, query string
+func createJobFromFlags() SQLJob {
 
-	flag.StringVar(&connectionstring, "c", "", "The connectionstring to use")
-	flag.StringVar(&database, "d", "postgres", "The database to use.")
-	flag.StringVar(&query, "q", "", "The query to use")
+	parameters := createJobParametersFromFlags()
 
-	flag.Parse()
+	return createJobFromParameters(parameters)
+}
 
-	return NewJob(query, connectionstring, database)
+func createJobFromParameters(parameters jobParameters) SQLJob {
+	return newJob(parameters)
 }
