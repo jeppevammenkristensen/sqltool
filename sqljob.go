@@ -60,7 +60,7 @@ func (s SqlJob) Analyze() ([]ResultMap, error) {
 	res := make([]interface{}, count)
 	valuePtrs := make([]interface{}, count)
 
-	for i, _ := range columns {
+	for i := range columns {
 
 		fmt.Println(i)
 		valuePtrs[i] = &res[i]

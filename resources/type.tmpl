@@ -1,7 +1,8 @@
-package {{.PackageName}}
+{{define "type"}}package {{.PackageName}}
 
 type {{.StructName}} struct {
-	{{range .Columns }}
-	    {{.ColumnName}} {{.Kind}}		
+	
+	{{range .Columns}}{{.ColumnName}} {{.Kind}}
 	{{end}}
 }
+{{end}}
