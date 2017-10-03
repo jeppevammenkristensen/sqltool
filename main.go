@@ -2,15 +2,14 @@ package main
 
 import (
 	"log"
-
-	"github.com/davecgh/go-spew/spew"
 )
 
 func main() {
 	job := createJobFromFlags()
 
 	result, err := job.Analyze()
-	spew.Dump(result)
+	process(result, "Hejsa", "main")
+
 	checkError(err)
 
 }

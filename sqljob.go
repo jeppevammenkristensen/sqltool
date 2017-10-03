@@ -41,13 +41,13 @@ type SqlJob struct {
 }
 
 type ResultMap struct {
-	columnName   string
-	kind         reflect.Kind
-	exampleValue interface{}
+	ColumnName   string
+	Kind         reflect.Kind
+	ExampleValue interface{}
 }
 
 // Analyze uses data from the SqlJob to call the query and
-// returns an AnalysisResult
+// returns an ResultMap
 func (s SqlJob) Analyze() ([]ResultMap, error) {
 
 	rows, err := s.connection.db.Query(s.query)

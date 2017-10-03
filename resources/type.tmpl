@@ -1,0 +1,7 @@
+package {{.PackageName}}
+
+type {{.StructName}} struct {
+	{{range .Columns }}
+	    {{.ColumnName}} {{.Kind}}		
+	{{end}}
+}
